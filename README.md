@@ -1,5 +1,5 @@
 # Tarea1
 
-Nombres:
-Bettancourt Pinto Pablo Ignacio
+Nombres: \n
+Bettancourt Pinto Pablo Ignacio \n
 Morales Contreras Javier Martín
