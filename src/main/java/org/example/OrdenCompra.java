@@ -34,7 +34,7 @@ public class OrdenCompra {
     public void calcPeso() {
 
     }
-
+    //a
     public Cliente getCliente(){
         return cliente;
     }
