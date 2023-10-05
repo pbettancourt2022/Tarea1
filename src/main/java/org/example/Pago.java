@@ -2,14 +2,14 @@ package org.example;
 
 import java.util.Date;
 
-//viendo el uml, pareciera que no debería ser abstracta la clase
+
 abstract class Pago {
     private float monto;
     private Date fecha;
 
-    public Pago(){
-        monto = 0;
-        fecha = null;
+    public Pago(float monto, Date fecha){
+        this.monto = monto;
+        this.fecha = fecha;
     }
 
     //getters y setters

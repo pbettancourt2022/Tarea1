@@ -9,9 +9,10 @@ public class Tarjeta extends Pago{
     private float monto;
     private Date fecha;
 
-    public Tarjeta(){
-        monto = 0;
-        fecha = null;
+    public Tarjeta(float monto, Date fecha, String tipo, String numTransaccion){
+        super(monto, fecha);
+        this.tipo = tipo;
+        this.numTransaccion = numTransaccion;
     }
 
     //getters y setters

@@ -34,16 +34,11 @@ public class Tarea1 {
         orden3.agregarDetalle(new DetalleOrden(producto3, 2));
 
         // Asociar documentos tributarios (Boleta o Factura) a las órdenes
-        Boleta boleta1 = new Boleta();
-        boleta1.setRut(cliente1.getRut());
-        boleta1.setFecha(new Date());
-        boleta1.setDireccion(cliente1.getDireccion());
+        //removí los setters, ahora se deberian agregar como parametros las variables
+        Boleta boleta1 = new Boleta(cliente1.getDireccion(), "uno", cliente1.getRut(), new Date());
         orden1.asociarDocumentoTributario(boleta1);
 
-        Factura factura1 = new Factura();
-        factura1.setRut(cliente2.getRut());
-        factura1.setFecha(new Date());
-        factura1.setDireccion(cliente2.getDireccion());
+        Factura factura1 = new Factura(cliente2.getDireccion(), "dos", cliente2.getRut(), new Date());
         orden2.asociarDocumentoTributario(factura1);
 
         // Calcula e imprime el precio total de las órdenes
@@ -52,7 +47,7 @@ public class Tarea1 {
         float precioTotalOrden3 = orden3.calcPrecio();
 
         // Registrar pagos
-        Efectivo pagoEfectivo1 = new Efectivo();
+        Efectivo pagoEfectivo1 = new Efectivo(25000.0f, new Date(2023, 10, 03));
         pagoEfectivo1.setMonto(25000.0f); // Monto pagado en efectivo
         pagoEfectivo1.setFecha(new Date());
         double devolucion1 = pagoEfectivo1.calcDevolucion(pagoEfectivo1.getMonto(), orden1.calcPrecio());
@@ -64,11 +59,7 @@ public class Tarea1 {
 
         System.out.println(" ");
 
-        Transferencia pagoTransferencia1 = new Transferencia();
-        pagoTransferencia1.setMonto(precioTotalOrden2); // Monto pagado por transferencia
-        pagoTransferencia1.setFecha(new Date());
-        pagoTransferencia1.setBanco("Banco A");
-        pagoTransferencia1.setNumCuenta("12345");
+        Transferencia pagoTransferencia1 = new Transferencia(precioTotalOrden2, new Date(2023, 10, 03), "Banco A", "12345");
         orden2.registrarPago(pagoTransferencia1);
         System.out.println("Total de la Orden 2 sin iva incluido: $" + orden2.calcPrecioSinIVA());
         System.out.println("Total de la Orden 2 con iva incluido: $" + orden2.calcPrecio());
@@ -76,11 +67,7 @@ public class Tarea1 {
 
         System.out.println(" ");
 
-        Tarjeta pagoTarjeta1 = new Tarjeta();
-        pagoTarjeta1.setMonto(precioTotalOrden3); // Monto pagado con tarjeta
-        pagoTarjeta1.setFecha(new Date());
-        pagoTarjeta1.setTipo("Visa");
-        pagoTarjeta1.setNumTransaccion("54321");
+        Tarjeta pagoTarjeta1 = new Tarjeta(precioTotalOrden3, new Date(2023, 10, 03), "Visa", "54321");
         orden3.registrarPago(pagoTarjeta1);
         System.out.println("Total de la Orden 3 sin iva: $" + orden3.calcPrecioSinIVA());
         System.out.println("Total de la Orden 3 con iva incluido: $" + orden3.calcPrecio());

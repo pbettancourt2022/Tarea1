@@ -5,14 +5,13 @@ import java.util.Date;
 public class Transferencia extends Pago {
     private String banco;
     private String numCuenta;
-    //monto y fecha heredado de la superclase
     private float monto;
     private Date fecha;
 
-    public Transferencia(){
-        monto = 0;
-        fecha = null;
-
+    public Transferencia(float monto, Date fecha, String banco, String numCuenta){
+        super(monto, fecha);
+        this.banco = banco;
+        this.numCuenta = numCuenta;
     }
 
     //getters y setters
