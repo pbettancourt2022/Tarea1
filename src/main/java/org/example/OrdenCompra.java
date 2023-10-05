@@ -6,25 +6,28 @@ import java.util.Date;
 
 public class OrdenCompra {
     private Cliente cliente;
-    private ArrayList<DetalleOrden> detalleOrdens; //hermano por que le poni ordens???!?!!? arreglalo porfa
-    private ArrayList<DocTributario> docTributarios; //arregla este igual
+    private ArrayList<DetalleOrden> detalleOrden;
+    private ArrayList<DocTributario> docTributario; //nota que, de acuerdo al uml, debería haber únicamente un docTributario
     private Date fecha;
+    /*
+    con respecto a estado, debería cambiar viendo si se paga completamente ordenCompra, o si falta por pagar
+    fijarse en el enunciado, "Un cliente puede pagar en varios plazos, y a veces en diferentes fechas"
+     */
     private String estado;
 
     public OrdenCompra(Cliente cliente){
         this.cliente = cliente;
-        this.detalleOrdens = new ArrayList<>();
-        this.docTributarios = new ArrayList<>();
+        this.detalleOrden = new ArrayList<>();
+        this.docTributario = new ArrayList<>();
         this.fecha = new Date();
         this.estado = "Pendiente";
     }
     public void agregarDetalle(DetalleOrden detalle) {
-        detalleOrdens.add(detalle);
+        detalleOrden.add(detalle);
     }
-
     public float calcPrecioSinIVA() {
         float precioSinIVA = 0.0F;
-        for (DetalleOrden detalle : detalleOrdens) {
+        for (DetalleOrden detalle : detalleOrden) {
             precioSinIVA += detalle.calcPrecioSinIVA();
         }
         return precioSinIVA;
@@ -32,7 +35,7 @@ public class OrdenCompra {
 
     public float calcIVA() {
         float IVA = 0.0F;
-        for (DetalleOrden detalle : detalleOrdens) {
+        for (DetalleOrden detalle : detalleOrden) {
             IVA += detalle.calcIVA();
         }
         return IVA;
@@ -44,13 +47,13 @@ public class OrdenCompra {
 
     public float calcPeso() {
         float pesoTotal = 0.0F;
-        for (DetalleOrden detalle : detalleOrdens) {
+        for (DetalleOrden detalle : detalleOrden) {
             pesoTotal += detalle.calcPeso();
         }
         return pesoTotal;
     }
     public void asociarDocumentoTributario(DocTributario documento) {
-        docTributarios.add(documento);
+        docTributario.add(documento);
         //añadido
     }
     public void registrarPago(Pago pago) {
@@ -64,13 +67,13 @@ public class OrdenCompra {
     }
     public void setCliente(Cliente cliente){this.cliente = cliente;}
     public ArrayList<DetalleOrden> getDetalleOrden(){
-        return detalleOrdens;
+        return detalleOrden;
     }
-    public void setDetalleOrdens(ArrayList<DetalleOrden> detalleOrdens){this.detalleOrdens = detalleOrdens;}
+    public void setDetalleOrdens(ArrayList<DetalleOrden> detalleOrdens){this.detalleOrden = detalleOrdens;}
     public ArrayList<DocTributario> getDocTributario(){
         return getDocTributario();
     }
-    public void setDocTributarios(ArrayList<DocTributario> docTributarios){this.docTributarios = docTributarios;}
+    public void setDocTributarios(ArrayList<DocTributario> docTributarios){this.docTributario = docTributarios;}
     public Date getFecha(){
         return fecha;
     }
