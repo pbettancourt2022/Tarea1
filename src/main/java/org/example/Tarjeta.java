@@ -14,7 +14,7 @@ public class Tarjeta extends Pago{
         fecha = null;
     }
 
-
+    //getters y setters
     public String getTipo(){
         return tipo;
     }
@@ -30,9 +30,17 @@ public class Tarjeta extends Pago{
     public float getMonto(){
         return monto;
     }
+    public void setMonto(float monto){
+        this.monto = monto;
+    }
     public Date getFecha(){
         return fecha;
     }
+    public void setFecha(Date fecha){
+        this.fecha = fecha;
+    }
+
+    //qué vuelto le darías a un pago con tarjeta?
     @Override
     public double calcDevolucion(double montoPagado, double montoTotal) {
         // Implementa la lógica para calcular la devolución en el caso de pago con tarjeta

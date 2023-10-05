@@ -1,12 +1,13 @@
 package org.example;
 
+import javax.print.Doc;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class OrdenCompra {
     private Cliente cliente;
-    private ArrayList<DetalleOrden> detalleOrdens;
-    private ArrayList<DocTributario> docTributarios;
+    private ArrayList<DetalleOrden> detalleOrdens; //hermano por que le poni ordens???!?!!? arreglalo porfa
+    private ArrayList<DocTributario> docTributarios; //arregla este igual
     private Date fecha;
     private String estado;
 
@@ -57,19 +58,25 @@ public class OrdenCompra {
         //añadido
     }
 
+    //getters y setters
     public Cliente getCliente(){
         return cliente;
     }
+    public void setCliente(Cliente cliente){this.cliente = cliente;}
     public ArrayList<DetalleOrden> getDetalleOrden(){
         return detalleOrdens;
     }
+    public void setDetalleOrdens(ArrayList<DetalleOrden> detalleOrdens){this.detalleOrdens = detalleOrdens;}
     public ArrayList<DocTributario> getDocTributario(){
         return getDocTributario();
     }
+    public void setDocTributarios(ArrayList<DocTributario> docTributarios){this.docTributarios = docTributarios;}
     public Date getFecha(){
         return fecha;
     }
+    public void setFecha(Date fecha){this.fecha = fecha;}
     public String getEstado(){
         return estado;
     }
+    public void setEstado(String estado){this.estado = estado;}
 }

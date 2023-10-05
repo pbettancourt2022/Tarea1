@@ -15,6 +15,7 @@ public class DocTributario {
         fecha = null;
     }
 
+    //getters y setters
     public String getRut(){
         return rut;
     }
