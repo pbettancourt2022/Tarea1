@@ -7,7 +7,10 @@ public class Efectivo extends Pago{
     private Date fecha;
 
     public Efectivo(float monto, Date fecha){
+
         super(monto, fecha);
+        setMonto(monto);
+        setFecha(fecha);
     }
     /*
     deberíamos ver cómo ocupar la variable monto en este método, no tiene sentido no ocuparla
@@ -15,7 +18,7 @@ public class Efectivo extends Pago{
     agregamos el precio en OrdenCompra con calcPrecio
      */
     @Override
-    public double calcDevolucion(double montoPagado, double montoTotal) {
+    public double calcDevolucion(float montoPagado, float montoTotal) {
         if ((montoPagado - montoTotal)<0){
             return 0.0;
         }else {

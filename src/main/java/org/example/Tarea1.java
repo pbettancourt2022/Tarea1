@@ -47,31 +47,44 @@ public class Tarea1 {
         float precioTotalOrden3 = orden3.calcPrecio();
 
         // Registrar pagos
-        Efectivo pagoEfectivo1 = new Efectivo(25000.0f, new Date(2023, 10, 03));
-        pagoEfectivo1.setMonto(25000.0f); // Monto pagado en efectivo
+        Efectivo pagoEfectivo1 = new Efectivo(25000.0f, new Date(2023, 11, 8));
+        orden1.registrarPago(pagoEfectivo1, new Date(2023, 11, 8));
         pagoEfectivo1.setFecha(new Date());
-        double devolucion1 = pagoEfectivo1.calcDevolucion(pagoEfectivo1.getMonto(), orden1.calcPrecio());
+        orden1.setEstado();
+        double devolucion1 = pagoEfectivo1.calcDevolucion(orden1.calcularTotalPagado(), orden1.calcPrecio());
         System.out.println(" ");
-        System.out.println( "Total de la compra sin iva: $" + orden1.calcPrecioSinIVA());
-        System.out.println("Total de la compra con iva incluido: $" + orden1.calcPrecio());
-        System.out.println("Devolución para Orden 1: $" + devolucion1);
+        System.out.println( "Total de la Orden 1 sin iva: $" + orden1.calcPrecioSinIVA());
         System.out.println("Precio total de Orden 1: $" + precioTotalOrden1);
+        System.out.println("Monto pagado: $" + orden1.calcularTotalPagado());
+        System.out.println("Devolución para Orden 1: $" + devolucion1);
+        System.out.println("Estado de la Orden 1: " + orden1.getEstado());
+        System.out.println("Fechas de pago: " + orden1.getFechasPago());
 
         System.out.println(" ");
 
         Transferencia pagoTransferencia1 = new Transferencia(precioTotalOrden2, new Date(2023, 10, 03), "Banco A", "12345");
-        orden2.registrarPago(pagoTransferencia1);
+        orden2.registrarPago(pagoTransferencia1, new Date(2023, 10, 03));
+        pagoTransferencia1.setFecha(new Date());
+        orden2.setEstado();
         System.out.println("Total de la Orden 2 sin iva incluido: $" + orden2.calcPrecioSinIVA());
-        System.out.println("Total de la Orden 2 con iva incluido: $" + orden2.calcPrecio());
         System.out.println("Precio total de Orden 2: $" + precioTotalOrden2);
-
+        System.out.println("Monto pagado: $" + orden2.calcularTotalPagado());
+        System.out.println("Estado de la Orden 1: " + orden2.getEstado());
+        System.out.println("Fechas de pago: " + orden2.getFechasPago());
         System.out.println(" ");
 
-        Tarjeta pagoTarjeta1 = new Tarjeta(precioTotalOrden3, new Date(2023, 10, 03), "Visa", "54321");
-        orden3.registrarPago(pagoTarjeta1);
+        Tarjeta pagoTarjeta1 = new Tarjeta(precioTotalOrden3/2, new Date(2023, 7, 03), "Visa", "54321");
+        orden3.registrarPago(pagoTarjeta1, new Date(2023, 7, 03));
+        Tarjeta segundopagoTarjeta1 = new Tarjeta(precioTotalOrden3/2, new Date(2023, 8, 30), "Visa", "60488");
+        orden3.registrarPago(segundopagoTarjeta1, new Date(2023, 8, 30));
+        pagoTarjeta1.setFecha(new Date());
+        orden3.setEstado();
+
         System.out.println("Total de la Orden 3 sin iva: $" + orden3.calcPrecioSinIVA());
-        System.out.println("Total de la Orden 3 con iva incluido: $" + orden3.calcPrecio());
         System.out.println("Precio total de Orden 3: $" + precioTotalOrden3);
+        System.out.println("Monto pagado: $" + orden3.calcularTotalPagado());
+        System.out.println("Estado de la Orden 1: " + orden3.getEstado());
+        System.out.println("Fechas de pago: " + orden3.getFechasPago());
     }
 }
 

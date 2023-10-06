@@ -28,8 +28,8 @@ public class Tarjeta extends Pago{
     public void setNumTransaccion(String numTransaccion) {
         this.numTransaccion = numTransaccion;
     }
-    public float getMonto(){
-        return monto;
+    public float getMonto(float precio){
+        return monto= precio;
     }
     public void setMonto(float monto){
         this.monto = monto;
@@ -41,11 +41,10 @@ public class Tarjeta extends Pago{
         this.fecha = fecha;
     }
 
-    //qué vuelto le darías a un pago con tarjeta?
+    //Si saco el calcular vuelto da error
     @Override
-    public double calcDevolucion(double montoPagado, double montoTotal) {
-        // Implementa la lógica para calcular la devolución en el caso de pago con tarjeta
-        // Por ejemplo, puedes retornar 0.0 ya que no hay devolución en pagos con tarjeta
-        return 0.0;
+    public double calcDevolucion(float montoPagado, float montoTotal) {
+        return 0;
     }
+
 }

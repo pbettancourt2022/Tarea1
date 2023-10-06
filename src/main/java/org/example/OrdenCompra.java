@@ -6,6 +6,8 @@ import java.util.Date;
 
 public class OrdenCompra {
     private Cliente cliente;
+    private ArrayList<Pago> pagos;
+    private ArrayList<Date> fechasPago;
     private ArrayList<DetalleOrden> detalleOrden;
     private ArrayList<DocTributario> docTributario; //nota que, de acuerdo al uml, debería haber únicamente un docTributario
     private Date fecha;
@@ -19,6 +21,8 @@ public class OrdenCompra {
         this.cliente = cliente;
         this.detalleOrden = new ArrayList<>();
         this.docTributario = new ArrayList<>();
+        this.pagos = new ArrayList<>();
+        this.fechasPago = new ArrayList<>();
         this.fecha = new Date();
         this.estado = "Pendiente";
     }
@@ -56,9 +60,29 @@ public class OrdenCompra {
         docTributario.add(documento);
         //añadido
     }
-    public void registrarPago(Pago pago) {
-        // Implementa la lógica para registrar pagos aquí
-        //añadido
+    public void registrarPago(Pago pago, Date fechaPago) {
+        pagos.add(pago);
+        fechasPago.add(fechaPago);
+
+
+    }
+    // Calcular el total de los pagos realizados hasta el momento
+    public float calcularTotalPagado() {
+        float totalPagado = 0.0F;
+        for (Pago pago : pagos) {
+            totalPagado += pago.getMonto();
+        }
+        return totalPagado;
+    }
+
+    // Obtener la lista de fechas de pago
+    public ArrayList<Date> getFechasPago() {
+        return fechasPago;
+    }
+
+    // Obtener la lista de pagos
+    public ArrayList<Pago> getPagos() {
+        return pagos;
     }
 
     //getters y setters
@@ -81,5 +105,13 @@ public class OrdenCompra {
     public String getEstado(){
         return estado;
     }
-    public void setEstado(String estado){this.estado = estado;}
+    public void setEstado(){
+        String estado;
+        if (calcularTotalPagado() >= calcPrecio()) {
+            estado="Vendido";
+        } else {
+            estado="Parcialmente pagado";
+        }
+        this.estado = estado;
+    }
 }

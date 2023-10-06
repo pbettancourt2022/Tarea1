@@ -29,6 +29,6 @@ abstract class Pago {
     //calcDevolucion no debería pertenecer a Pago, solo se usa en Efectivo
 
     // Método abstracto para calcular la devolución en el caso de pago en efectivo
-    public abstract double calcDevolucion(double montoPagado, double montoTotal);
+    public abstract double calcDevolucion(float montoPagado, float montoTotal);
 }
 

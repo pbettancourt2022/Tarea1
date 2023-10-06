@@ -16,6 +16,7 @@ public abstract class DocTributario {
         this.fecha = fecha;
     }
 
+
     //getters y setters
     public String getRut(){
         return rut;

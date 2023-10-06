@@ -27,8 +27,8 @@ public class Transferencia extends Pago {
     public void setNumCuenta(String numCuenta) {
         this.numCuenta = numCuenta;
     }
-    public float getMonto(){
-        return monto;
+    public float getMonto(float precio){
+        return monto=precio;
     }
     public void setMonto(float monto){
         this.monto = monto;
@@ -40,7 +40,7 @@ public class Transferencia extends Pago {
 
     //calcDevolucion debería estar solamente en Efectivo, qué vuelto le darías a una transferencia? lol
     @Override
-    public double calcDevolucion(double montoPagado, double montoTotal) {
+    public double calcDevolucion(float montoPagado, float montoTotal) {
         // Implementa la lógica para calcular la devolución en el caso de pago por transferencia
         // Por ejemplo, puedes retornar 0.0 ya que no hay devolución en transferencias
         return 0;
