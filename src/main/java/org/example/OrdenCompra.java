@@ -6,28 +6,24 @@ import java.util.Date;
 
 public class OrdenCompra {
     private Cliente cliente;
-    private ArrayList<Pago> pagos;
-    private ArrayList<Date> fechasPago;
+    //variable agregada para llevar cuenta de los pagos realizados
+    private ArrayList<Pago> pago;
     private ArrayList<DetalleOrden> detalleOrden;
-    private ArrayList<DocTributario> docTributario; //nota que, de acuerdo al uml, debería haber únicamente un docTributario
+    private DocTributario docTributario;
     private Date fecha;
-    /*
-    con respecto a estado, debería cambiar viendo si se paga completamente ordenCompra, o si falta por pagar
-    fijarse en el enunciado, "Un cliente puede pagar en varios plazos, y a veces en diferentes fechas"
-     */
     private String estado;
 
-    public OrdenCompra(Cliente cliente){
+    public OrdenCompra(Cliente cliente, ArrayList<DetalleOrden> detalleOrden , int tipoDocTributario){
         this.cliente = cliente;
-        this.detalleOrden = new ArrayList<>();
-        this.docTributario = new ArrayList<>();
-        this.pagos = new ArrayList<>();
-        this.fechasPago = new ArrayList<>();
+        this.detalleOrden = detalleOrden;
+        this.pago = new ArrayList<>();
         this.fecha = new Date();
         this.estado = "Pendiente";
-    }
-    public void agregarDetalle(DetalleOrden detalle) {
-        detalleOrden.add(detalle);
+        //agrega la orden a cliente
+        cliente.getOrdenCompra().add(this);
+        if(tipoDocTributario == 1){
+            this.docTributario = new Boleta(this.cliente.getDireccion(), (this.cliente.getRut()), this.cliente.getRut(), this.fecha); //notar que el numero es el mismo que el rut simplemente para agregarle variedad y no sea el mismo para todos
+        } else this.docTributario = new Factura(this.cliente.getDireccion(), (this.cliente.getRut()), this.cliente.getRut(), this.fecha);
     }
     public float calcPrecioSinIVA() {
         float precioSinIVA = 0.0F;
@@ -36,7 +32,6 @@ public class OrdenCompra {
         }
         return precioSinIVA;
     }
-
     public float calcIVA() {
         float IVA = 0.0F;
         for (DetalleOrden detalle : detalleOrden) {
@@ -44,11 +39,9 @@ public class OrdenCompra {
         }
         return IVA;
     }
-
     public float calcPrecio() {
         return calcPrecioSinIVA() + calcIVA();
     }
-
     public float calcPeso() {
         float pesoTotal = 0.0F;
         for (DetalleOrden detalle : detalleOrden) {
@@ -56,36 +49,37 @@ public class OrdenCompra {
         }
         return pesoTotal;
     }
-    public void asociarDocumentoTributario(DocTributario documento) {
-        docTributario.add(documento);
-        //añadido
-    }
-    public void registrarPago(Pago pago, Date fechaPago) {
-        pagos.add(pago);
-        fechasPago.add(fechaPago);
-
-
-    }
     // Calcular el total de los pagos realizados hasta el momento
-    public float calcularTotalPagado() {
+    // este metodo es uno de los cambios con respecto al uml, como el uml no nos da un metodo que calcule el pago es necesario agregar uno
+    public float calcPago() {
         float totalPagado = 0.0F;
-        for (Pago pago : pagos) {
+        for (Pago pago : this.pago) {
             totalPagado += pago.getMonto();
+        }
+
+        if (totalPagado >= calcPrecio()) {
+            estado = "Vendido";
+        } else {
+            estado = "Parcialmente pagado";
         }
         return totalPagado;
     }
-
-    // Obtener la lista de fechas de pago
-    public ArrayList<Date> getFechasPago() {
-        return fechasPago;
-    }
-
-    // Obtener la lista de pagos
-    public ArrayList<Pago> getPagos() {
-        return pagos;
+    // a su vez, este metodo tambien es agregado pues basandose en el uml no habria forma de agregar pagos a la ArrayList
+    public void registrarPago(Pago pago) {
+        if(pago.getMonto() < calcPrecio()) {
+            this.pago.add(pago);
+        }else if (!(pago instanceof Efectivo)){ //para asegurarse de que las tarjetas y transferencias no paguen mas de lo que deben
+            if(pago instanceof Tarjeta) {
+                this.pago.add(new Tarjeta(calcPrecio(), pago.getFecha(), ((Tarjeta) pago).getTipo(), ((Tarjeta) pago).getNumTransaccion()));
+            } else if(pago instanceof Transferencia){
+                this.pago.add(new Transferencia(calcPrecio(), pago.getFecha(), ((Transferencia) pago).getBanco(), ((Transferencia) pago).getNumCuenta()));
+            }
+        } else this.pago.add(pago); //agrega pago en caso de que sea efectivo, o que el pago sea igual al monto de la tarjeta o la transferencia
     }
 
     //getters y setters
+    public ArrayList<Pago> getPago() {return pago;}
+    public void setPago(ArrayList<Pago> pago){this.pago = pago;}
     public Cliente getCliente(){
         return cliente;
     }
@@ -93,11 +87,11 @@ public class OrdenCompra {
     public ArrayList<DetalleOrden> getDetalleOrden(){
         return detalleOrden;
     }
-    public void setDetalleOrdens(ArrayList<DetalleOrden> detalleOrdens){this.detalleOrden = detalleOrdens;}
-    public ArrayList<DocTributario> getDocTributario(){
-        return getDocTributario();
+    public void setDetalleOrden(ArrayList<DetalleOrden> detalleOrden){this.detalleOrden = detalleOrden;}
+    public DocTributario getDocTributario(){
+        return docTributario;
     }
-    public void setDocTributarios(ArrayList<DocTributario> docTributarios){this.docTributario = docTributarios;}
+    public void setDocTributario(DocTributario docTributario){this.docTributario = docTributario;}
     public Date getFecha(){
         return fecha;
     }
@@ -105,13 +99,15 @@ public class OrdenCompra {
     public String getEstado(){
         return estado;
     }
-    public void setEstado(){
-        String estado;
-        if (calcularTotalPagado() >= calcPrecio()) {
-            estado="Vendido";
-        } else {
-            estado="Parcialmente pagado";
-        }
-        this.estado = estado;
+    public void setEstado(String estado){this.estado = estado;}
+    public String toString() {
+        return "OrdenCompra{" +
+                "cliente = " + cliente.toString() +
+                ", pagos = " + pago +
+                ", detalleOrden = " + detalleOrden.toString() +
+                ", docTributario = " + docTributario +
+                ", fecha = " + fecha +
+                ", estado = " + estado +
+                '}';
     }
 }

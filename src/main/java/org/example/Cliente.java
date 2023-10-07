@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 public class Cliente{
     private ArrayList<OrdenCompra> ordenCompra;
-    private Direccion direccion;//revisar
+    private Direccion direccion;
     private String nombre;
     private String rut;
     public Cliente(String nombre, String rut, Direccion direccion) {
         this.nombre = nombre;
         this.rut = rut;
-        this.direccion = direccion; //agregado
+        this.direccion = direccion;
         this.ordenCompra = new ArrayList<>();
     }
 
@@ -29,5 +29,12 @@ public class Cliente{
     public void setDireccion(Direccion direccion){this.direccion = direccion;}
     public ArrayList<OrdenCompra> getOrdenCompra(){return ordenCompra;}
     public void setOrdenCompra(ArrayList<OrdenCompra> ordenCompra){this.ordenCompra = ordenCompra;}
-
+    public String toString() {
+        return "Cliente{" +
+                "nombre = " + nombre +
+                ", rut = " + rut +
+                ", direccion = " + direccion +
+                ", ordenCompra = " + System.identityHashCode(ordenCompra) +
+                '}';
+    }
 }

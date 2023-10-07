@@ -11,6 +11,8 @@ public class Tarjeta extends Pago{
 
     public Tarjeta(float monto, Date fecha, String tipo, String numTransaccion){
         super(monto, fecha);
+        this.monto = monto;
+        this.fecha = fecha;
         this.tipo = tipo;
         this.numTransaccion = numTransaccion;
     }
@@ -41,10 +43,13 @@ public class Tarjeta extends Pago{
         this.fecha = fecha;
     }
 
-    //Si saco el calcular vuelto da error
-    @Override
-    public double calcDevolucion(float montoPagado, float montoTotal) {
-        return 0;
+    public String toString() {
+        return "Tarjeta{" +
+                "monto = " + monto +
+                ", fecha = " + fecha +
+                ", tipo = " + tipo +
+                ", numTransaccion = " + numTransaccion +
+                '}';
     }
 
 }

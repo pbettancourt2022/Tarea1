@@ -26,9 +26,11 @@ abstract class Pago {
         this.fecha = fecha;
     }
 
-    //calcDevolucion no debería pertenecer a Pago, solo se usa en Efectivo
-
-    // Método abstracto para calcular la devolución en el caso de pago en efectivo
-    public abstract double calcDevolucion(float montoPagado, float montoTotal);
+    public String toString() {
+        return "Pago{" +
+                "monto = " + monto +
+                ", fecha = " + fecha +
+                '}';
+    }
 }
 

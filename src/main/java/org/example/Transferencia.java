@@ -10,6 +10,8 @@ public class Transferencia extends Pago {
 
     public Transferencia(float monto, Date fecha, String banco, String numCuenta){
         super(monto, fecha);
+        this.monto = monto;
+        this.fecha = fecha;
         this.banco = banco;
         this.numCuenta = numCuenta;
     }
@@ -38,11 +40,12 @@ public class Transferencia extends Pago {
     }
     public void setDate(Date fecha){this.fecha = fecha;}
 
-    //calcDevolucion debería estar solamente en Efectivo, qué vuelto le darías a una transferencia? lol
-    @Override
-    public double calcDevolucion(float montoPagado, float montoTotal) {
-        // Implementa la lógica para calcular la devolución en el caso de pago por transferencia
-        // Por ejemplo, puedes retornar 0.0 ya que no hay devolución en transferencias
-        return 0;
+    public String toString() {
+        return "Transferencia{" +
+                "monto = " + monto +
+                ", fecha = " + fecha +
+                ", banco = " + banco +
+                ", numCuenta = " + numCuenta+
+                '}';
     }
 }

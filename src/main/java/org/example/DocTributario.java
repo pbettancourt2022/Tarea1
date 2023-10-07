@@ -38,4 +38,11 @@ public abstract class DocTributario {
     public void setDireccion(Direccion direccion) {
         this.direccion = direccion;
     }
+    public String toString(){
+        return "DocTributario{direccion = " + direccion +
+                ", numero = " + numero +
+                ", fecha = " + fecha +
+                ", rut = " + rut +
+                '}';
+    }
 }

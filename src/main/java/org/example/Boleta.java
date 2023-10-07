@@ -10,6 +10,10 @@ class Boleta extends DocTributario{
 
     public Boleta(Direccion direccion, String numero, String rut, Date fecha){
         super(direccion, numero, rut, fecha);
+        this.direccion = direccion;
+        this.numero = numero;
+        this.rut = rut;
+        this.fecha = fecha;
     }
 
     public String getRut(){
@@ -32,5 +36,11 @@ class Boleta extends DocTributario{
     public void setDireccion(Direccion direccion) {
         this.direccion = direccion;
     }
-
+    public String toString(){
+        return "Boleta{direccion = " + direccion +
+                ", numero = " + numero +
+                ", fecha = " + fecha +
+                ", rut = " + rut +
+                '}';
+    }
 }

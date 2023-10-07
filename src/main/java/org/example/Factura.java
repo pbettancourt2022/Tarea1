@@ -10,6 +10,10 @@ class Factura extends DocTributario {
 
     public Factura(Direccion direccion, String numero, String rut, Date fecha){
         super(direccion, numero, rut, fecha);
+        this.direccion = direccion;
+        this.numero = numero;
+        this.rut = rut;
+        this.fecha = fecha;
     }
 
     //getters y setters
@@ -32,5 +36,12 @@ class Factura extends DocTributario {
     public Direccion getDireccion(){return direccion;}
     public void setDireccion(Direccion direccion) {
         this.direccion = direccion;
+    }
+    public String toString(){
+        return "Factura{direccion = " + direccion +
+                ", numero = " + numero +
+                ", fecha = " + fecha +
+                ", rut = " + rut +
+                '}';
     }
 }
